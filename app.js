@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 const server = http.createServer(app);
 const io = new SocketServer(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://next-client-gabow.vercel.app/",
     },
 });
 
