@@ -45,8 +45,8 @@ io.on("connection", (socket) => {
     console.log("Socket conectado...");
     globalThis.registerSocket=socket;
     console.log(socket.id);
-    socket.on("newCor",({cor,to})=>{
-        io.emit("newCor",{cor:cor,to:to});
+    socket.on("newCor",({cor,to,from})=>{
+        io.emit("newCor",{cor:cor,to:to,from:from});
     })
     socket.on("stopWp",({to})=>{
         io.emit("stopWp",{to:to});
