@@ -48,6 +48,9 @@ io.on("connection", (socket) => {
     socket.on("newCor",({cor,to})=>{
         io.emit("newCor",{cor:cor,to:to});
     })
+    socket.on("stopWp",({to})=>{
+        io.emit("stopWp",{to:to});
+    })
 });
 
 app.post("/api/session/clear",(req,res)=>{
