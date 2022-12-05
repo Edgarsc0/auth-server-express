@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba coordenadas</title>
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+</head>
+<body>
+    <h1 class="encabezado">Sistema de Manejo de Coordenadas Continuas</h1>
+    <div class="flecha">
+        <button class="enviar" onclick="getLocation()">Iniciar WatchPosition()</button>
+    </div>
+    <br>
+    <br>
+    <label>WatchPosition(): </label>
+    <input type="text" id="wp" readonly="">
+    <div id="div" class="flecha"></div>
+    <hr>
+    <!--<canvas id="cv" style="width: 4000px;border:1px solid black;"></canvas>-->
+    <!--<button onclick="dibujarCanva()">DibujarCanva</button>-->
+    <script>
+        var i=1;
+        var lat=[];
+        var lon=[];
+        var alt=[];
+        function mostrarGrafico(){
+            cor=document.getElementById("cor").value;
+            cor_separado=cor.split('(');
+            cor_separado.pop('');
+            cor2='';
+            for(i=0;i<cor_separado.length;i++){
+                cor2+=cor_separado[i];
+            }
+            cor_segundaVezSeparado=cor2.split(')');
+            cor_segundaVezSeparado.pop('');
+            for(i=0;i<cor_segundaVezSeparado.length;i++){
+                lon.push(cor_segundaVezSeparado[i].split(',')[0]);
+                lat.push(cor_segundaVezSeparado[i].split(',')[1]);
+            }
+            graficar(lon,lat)
+        }
+        function graficar(x,y){
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("id","gd");
+            document.body.appendChild(newDiv);
+            /*CONTORNO DE LA ESCUELA
+            (-99.17541532539201,19.454336741401818)
+            (-99.17512231414875,19.454072754761494)
+            (-99.17461031579097,19.453320275824684)
+            (-99.17521735036371,19.45287151199291)
+            (-99.17602737788347,19.453431073536365)*/
+            cex=[-99.17541532539201,-99.17512231414875,-99.17461031579097,-99.17521735036371,-99.17602737788347,-99.17541532539201];
+            cey=[19.454336741401818,19.454072754761494,19.453320275824684,19.45287151199291,19.453431073536365,19.454336741401818]; 
+            /*1(-99.1756954746791,19.453892195944235)
+            2(-99.17518183576605,19.453584552325598)
+            3(-99.17523749159493,19.453505518363585)
+            4(-99.17534746221106,19.45357190682758)
+            5(-99.17537428426803,19.453533338228258)
+            6(-99.1754440217851,19.453572538994447)
+            7(-99.17545810334578,19.453552306369573)
+            8(-99.17528375970011,19.453444188006618)
+            9(-99.17544670389499,19.453208982651297)
+            10(-99.17595632375087,19.453517531139237)
+            11(-99.17579606199205,19.453747678376818)
+            12(-99.17556472109659,19.453607314116777)
+            13(-99.1755508731297,19.45362774630948)
+            14(-99.17561433763215,19.453667739635584)
+            15(-99.17559153882097,19.453701250024466)
+            16(-99.17552582476449,19.453660784619444)
+            17(-99.17551576646892,19.453681649569084)
+            18(-99.1757383900352,19.453830233305336)*/
+            ceax=[-99.1756954746791,-99.17518183576605,-99.17523749159493,-99.17534746221106,-99.17537428426803,-99.1754440217851,
+            -99.17545810334578,-99.17528375970011,-99.17544670389499,-99.17595632375087,-99.17579606199205,-99.17556472109659,
+            -99.1755508731297,-99.17561433763215,-99.17559153882097,-99.17552582476449,-99.17551576646892,-99.1757383900352,-99.1756954746791];
+            ceay=[19.453892195944235,19.453584552325598,19.453505518363585,19.45357190682758,19.453533338228258,19.453572538994447,
+            19.453552306369573,19.453444188006618,19.453208982651297,19.453517531139237,19.453747678376818,19.453607314116777,
+            19.45362774630948,19.453667739635584,19.453701250024466,19.453660784619444,19.453681649569084,19.453830233305336,19.453892195944235];
+            cegx=[-99.17532798981556,-99.17516504536202,-99.17542600216802,-99.17543002548388,-99.1754675764514,-99.1755138445508,-99.17547562303848,-99.17559151690027,-99.17532798981556];
+            cegy=[19.453808974780536,19.45404797281946,19.454208614587117,19.45420355642922,19.454226950396784,19.454163723411376,19.454140329457825,19.453967042237146,19.453808974780536];
+            var data=[{x:x,y:y},{x:cex,y:cey},{x:ceax,y:ceay},{x:cegx,y:cegy}];
+            //var data=[{x:x,y:y}];
+            //var layout={title:"Recorrido",width:600,height:"600"};
+            var layout={title:"Recorrido",width:600,height:"600",yaxis: {fixedrange: true},xaxis :{fixedrange: true}};
+            Plotly.newPlot("gd",data,layout);
+        }
+        function calcularArea(px,py){
+            var suma1=0;
+            for(i=0;i<px.length-1;i++){
+                suma1+=px[i]*py[i+1];
+            }
+            var suma2=0;
+            for(i=0;i<px.length-1;i++){
+                suma2+=px[i+1]*py[i];
+            }
+            return Math.abs(0.5*(suma1-suma2));
+        }
+        /*
+        CONTORNO EDIF AULAS
+        19.453207518417145, -99.17544652013044
+        19.453519557636113, -99.17595448028152
+        19.45389325323486, -99.17569611465676
+        19.453584221305192, -99.17518177457127
+        CONTORNO EDIF GOBIERNO
+        19.45380788954552, -99.17532844482236
+        19.453967853726997, -99.17559063093498
+        19.45420811638694, -99.17542634570286
+        19.454047519898072, -99.17516483006723
+        */
+        function isInAreaComun(){
+            if(isInEscuela()==false){
+                alert("No estas dentro de Area Comun");
+            }else{
+                if(isInEdifAulas()==false && isInEdifGob()==false){
+                    alert("Estas dentro de Area Comun");
+                }
+            }
+        }
+        function isInEdifGob(){
+            px=[-99.17532844482236,-99.17559063093498,-99.17542634570286,-99.17516483006723,-99.17532844482236];
+            py=[19.45380788954552,19.453967853726997,19.45420811638694,19.454047519898072,19.45380788954552];
+            area_poligono=calcularArea(px,py);
+            clientx=document.getElementById("s_lon").value;
+            clienty=document.getElementById("s_lat").value;
+            area_total=calcularArea([px[0],px[1],clientx,px[0]],[py[0],py[1],clienty,py[0]])+
+            calcularArea([px[1],px[2],clientx,px[1]],[py[1],py[2],clienty,py[1]])+
+            calcularArea([px[2],px[3],clientx,px[2]],[py[2],py[3],clienty,py[2]])+
+            calcularArea([px[3],px[4],clientx,px[3]],[py[3],py[4],clienty,py[3]]);
+            if(area_poligono.toFixed(10)==area_total.toFixed(10)){
+                alert("Estas dentro de la escuela y dentro del edificio de Gobierno");
+                return true;
+            }else{
+                alert("No estas dentro del edificio de Gobierno.");
+                return false;
+            }
+        }
+        function isInEdifAulas(){
+            px=[-99.17544652013044,-99.17595448028152,-99.17569611465676,-99.17518177457127,-99.17544652013044];
+            py=[19.453207518417145,19.453519557636113,19.45389325323486,19.453584221305192,19.453207518417145];
+            area_poligono=calcularArea(px,py);
+            clientx=document.getElementById("s_lon").value;
+            clienty=document.getElementById("s_lat").value;
+            area_total=calcularArea([px[0],px[1],clientx,px[0]],[py[0],py[1],clienty,py[0]])+
+            calcularArea([px[1],px[2],clientx,px[1]],[py[1],py[2],clienty,py[1]])+
+            calcularArea([px[2],px[3],clientx,px[2]],[py[2],py[3],clienty,py[2]])+
+            calcularArea([px[3],px[4],clientx,px[3]],[py[3],py[4],clienty,py[3]]);
+            if(area_poligono.toFixed(10)==area_total.toFixed(10)){
+                alert("Estas dentro de la escuela y dentro del edificio de Aulas");
+                return true;
+            }else{
+                alert("No estas dentro del edificio de aulas.");
+                return false;
+            }
+        }
+        function isInEscuela(){
+            px=[-99.17541532539201,-99.17512231414875,-99.17461031579097,-99.17521735036371,-99.17602737788347,-99.17541532539201];
+            py=[19.454336741401818,19.454072754761494,19.453320275824684,19.45287151199291,19.453431073536365,19.454336741401818];      
+            clientx=document.getElementById("s_lon").value;
+            clienty=document.getElementById("s_lat").value;
+            area_poligono=calcularArea(px,py);
+            var area_total=calcularArea([px[0],px[1],clientx,px[0]],[py[0],py[1],clienty,py[0]])+
+            calcularArea([px[1],px[2],clientx,px[1]],[py[1],py[2],clienty,py[1]])+
+            calcularArea([px[2],px[3],clientx,px[2]],[py[2],py[3],clienty,py[2]])+
+            calcularArea([px[3],px[4],clientx,px[3]],[py[3],py[4],clienty,py[3]])+
+            calcularArea([px[4],px[5],clientx,px[4]],[py[4],py[5],clienty,py[4]]);
+            if(area_poligono.toFixed(10)==area_total.toFixed(10)){
+                alert("Estas dentro de la escuela");
+                return true;
+            }else{
+                alert("No estas dentro del plantel");
+                return false;
+            }
+        }
+        function isIn(){
+            px=[-99.17541532539201,-99.17512231414875,-99.17461031579097,-99.17521735036371,-99.17602737788347,-99.17541532539201];
+            py=[19.454336741401818,19.454072754761494,19.453320275824684,19.45287151199291,19.453431073536365,19.454336741401818];      
+            var suma1=0;
+            for(i=0;i<px.length-1;i++){
+                suma1+=px[i]*py[i+1];
+            }
+            var suma2=0;
+            for(i=0;i<px.length-1;i++){
+                suma2+=px[i+1]*py[i];
+            }
+            area_poligono=Math.abs(0.5*(suma1-suma2)).toFixed(10);
+
+            clientx=document.getElementById("s_lon").value;
+            clienty=document.getElementById("s_lat").value;
+            //TRIANGULO 1
+            tr1x=[px[0],px[1],clientx,px[0]];
+            tr1y=[py[0],py[1],clienty,py[0]];
+            var suma3=0;
+            for(i=0;i<tr1x.length-1;i++){
+                suma3+=tr1x[i]*tr1y[i+1];
+            }
+            var suma4=0;
+            for(i=0;i<tr1x.length-1;i++){
+                suma4+=tr1x[i+1]*tr1y[i];
+            }
+            area_1=Math.abs(0.5*(suma3-suma4));
+            //TRIANGULO 2
+            tr2x=[px[1],px[2],clientx,px[1]];
+            tr2y=[py[1],py[2],clienty,py[1]];
+            var suma5=0;
+            for(i=0;i<tr2x.length-1;i++){
+                suma5+=tr2x[i]*tr2y[i+1];
+            }
+            var suma6=0;
+            for(i=0;i<tr2x.length-1;i++){
+                suma6+=tr2x[i+1]*tr2y[i];
+            }
+            area_2=Math.abs(0.5*(suma5-suma6))
+            //TRIANGULO 3
+            tr3x=[px[2],px[3],clientx,px[2]];
+            tr3y=[py[2],py[3],clienty,py[2]];
+            var suma7=0;
+            for(i=0;i<tr3x.length-1;i++){
+                suma7+=tr3x[i]*tr3y[i+1];
+            }
+            var suma8=0;
+            for(i=0;i<tr3x.length-1;i++){
+                suma8+=tr3x[i+1]*tr3y[i];
+            }
+            area_3=Math.abs(0.5*(suma7-suma8));
+            //TRIANGULO 4
+            tr4x=[px[3],px[4],clientx,px[3]];
+            tr4y=[py[3],py[4],clienty,py[3]];
+            var suma9=0;
+            for(i=0;i<tr4x.length-1;i++){
+                suma9+=tr4x[i]*tr4y[i+1];
+            }
+            var suma10=0;
+            for(i=0;i<tr4x.length-1;i++){
+                suma10+=tr4x[i+1]*tr4y[i];
+            }
+            area_4=Math.abs(0.5*(suma9-suma10));
+            //TRIANGULO 5
+            tr5x=[px[4],px[5],clientx,px[4]];
+            tr5y=[py[4],py[5],clienty,py[4]];
+            var suma11=0;
+            for(i=0;i<tr5x.length-1;i++){
+                suma11+=tr5x[i]*tr5y[i+1];
+            }
+            var suma12=0;
+            for(i=0;i<tr5x.length-1;i++){
+                suma12+=tr5x[i+1]*tr5y[i];
+            }
+            area_5=Math.abs(0.5*(suma11-suma12));
+            area_total=(area_1+area_2+area_3+area_4+area_5).toFixed(10);
+            if(area_poligono==area_total){
+                alert('El punto esta dentro del poligono.');
+            }
+            else{
+                alert('No esta dentro del poligono.');
+            }
+        }
+        function getLocation(){
+            if(navigator.geolocation){
+                var options={enableHighAccuracy:true,timeout:5000,maximumAge:0};
+                globalThis.wp=navigator.geolocation.watchPosition(showPosition,error,options);
+                globalThis.button=document.createElement("BUTTON");
+                var text="Detener Wp()";
+                button.innerHTML=text;
+                button.setAttribute("onclick","detenerWp()");
+                button.setAttribute("class","enviar")
+                button.setAttribute("id","parar");
+                globalThis.copiar=document.createElement("BUTTON");
+                copiar.setAttribute("id","copiar");
+                var txt="Copiar coordenadas";
+                copiar.innerHTML=txt;
+                copiar.setAttribute("class","enviar")
+                copiar.setAttribute("onclick","copiarCoordenadas()")
+                document.getElementById("div").appendChild(button);
+                document.getElementById("div").appendChild(copiar);
+            }else{}
+        }
+        function detenerWp(){
+            try{
+                navigator.geolocation.clearWatch(wp);
+                document.getElementById("div").removeChild(button);
+                //document.getElementById("div").removeChild(copiar);
+                alert("Se logro parar Wp()");
+                //alert(lat+", "+lon+", "+alt);
+            }catch(error){
+                alert("No se logro parar el WatchPosition()"+error);
+            }
+        }
+        function error(){
+            alert("Error al ejecutar WP()");
+        }
+        corx=[];
+        cory=[];
+        function showPosition(position){
+            var tabla=document.createElement("TABLE");
+            tabla.setAttribute("class","cons")
+            tabla.setAttribute("id","tb");
+            //tabla.setAttribute("border","1");
+            var piso;
+            var fila_col="<tr><td>"+i+": </td><td><input type='text' style='border:0;' id='longitud-"+i+"' readonly='' value='("+position.coords.longitude.toFixed(13)+",'></td><td><input type='text' style='border:0;' readonly='' id='latitud-"+i+"' value='"+position.coords.latitude.toFixed(13)+")'></td><td><input type='text' readonly='' id='altura-"+i+"' value='"+position.coords.altitude+"'>";
+            if(position.coords.altitude<2243){
+                piso="<td>Estas en planta baja</td></tr>";
+            }if(position.coords.altitude>=2243 && position.coords.altitude<2246){
+                piso="<td>Estas en el primer piso</td></tr>;"
+            }if(position.coords.altitude>=2246 && position.coords.altitude<2249){
+                piso="<td>Estas en el segundo piso</td></tr>";
+            }if(position.coords.altitude>=2249){
+                piso="<td>Estas en el tercer piso</td></tr>";
+            }
+            lat.push(position.coords.latitude.toFixed(13));
+            lon.push(position.coords.longitude.toFixed(13));
+            try{alt.push(position.coords.altitude.toFixed(13))}catch(error){alt.push(position.coords.altitude);}
+            tabla.innerHTML=fila_col+piso;
+            document.getElementById("div").appendChild(tabla);
+            i++;
+            corx.push(position.coords.longitude.toFixed(13));
+            cory.push(position.coords.latitude.toFixed(13));
+            //alert(corx+", "+cory);
+            graficar(corx,cory);
+        }
+
+        function copiarCoordenadas(){
+            //alert(document.querySelectorAll("#tb").length);
+            var coordenadas="";
+            for(i=0;i<document.querySelectorAll("#tb").length;i++){
+                coordenadas+=document.getElementById("longitud-"+(i+1)).value+document.getElementById("latitud-"+(i+1)).value;
+            }
+            var textArea=document.createElement("TEXTAREA");
+            textArea.setAttribute("id","ta");
+            textArea.innerHTML=coordenadas;
+            textArea.setAttribute("readonly","''");
+            //textArea.setAttribute("style","visibility:hidden;");
+            document.getElementById("div").appendChild(textArea);
+            try{
+                textArea.focus();
+                document.execCommand("selectAll");
+                document.execCommand("copy")
+                alert("Copiado!");
+            }catch(error){
+                alert("No se pudo obtener las coordenadas");
+            }
+        }  
+        function test(){
+            navigator.geolocation.getCurrentPosition(test2);
+        }
+        function test2(position){
+            if(position.coords.altitude==null){
+                alert("No se logro obtener la altura");
+            }else{
+                document.getElementById("alt").value=position.coords.altitude;
+            }
+        }
+        function calcularDistancia(){
+            var r=6.371009*10**6;
+            var lat1=parseFloat(document.getElementById("lat1").value);
+            var lat2=parseFloat(document.getElementById("lat2").value);
+            var lon1=parseFloat(document.getElementById("long1").value);
+            var lon2=parseFloat(document.getElementById("long2").value);
+            var v1x=(r*Math.cos(lat1*Math.PI/180)*Math.cos((360+lon1)*Math.PI/180));
+            var v1y=(r*Math.cos(lat1*Math.PI/180)*Math.sin((360+lon1)*Math.PI/180));
+            var v1z=(r*Math.sin(lat1*Math.PI/180));
+            var v2x=(r*Math.cos(lat2*Math.PI/180)*Math.cos((360+lon2)*Math.PI/180));
+            var v2y=(r*Math.cos(lat2*Math.PI/180)*Math.sin((360+lon2)*Math.PI/180));
+            var v2z=(r*Math.sin(lat2*Math.PI/180));
+            var productoPunto=(v1x*v2x+v2y*v1y+v1z*v2z);
+            var acos=180*Math.acos((productoPunto/(r**2)))/Math.PI;
+            var distancia=(Math.PI*r*acos)/180;
+            document.getElementById("distancia").value=distancia+"m";
+        }
+        function obtenerC1(){
+            if(!navigator.geolocation){
+                alert("Tu navegador no soporta la geolocalizacion");
+            }else{
+                var options={enableHighAccuracy:true,timeout:5000,maximumAge:0};
+                navigator.geolocation.getCurrentPosition(onSucces,onError,options);
+                function onSucces(position){
+                    const {
+                        latitude,
+                        longitude
+                    }=position.coords;
+                    /*document.getElementById('cor1-lat').value=`${latitude}`//`Your location: (${latitude},${longitude})`
+                    document.getElementById('cor1-lon').value=`${longitude}`//`Your location: (${latitude},${longitude})`*/
+                    document.getElementById('cor1-lat').value=(parseFloat(`${latitude}`)).toFixed(14);
+                    document.getElementById('cor1-lon').value=(parseFloat(`${longitude}`)).toFixed(14);
+                }
+                function onError(){
+                    document.getElementById('cor1').value="No se obtuvieron las coordenadas";
+                }
+            }
+        }
+        function obtenerC2(){
+            if(!navigator.geolocation){
+                alert("Tu navegador no soporta la geolocalizacion");
+            }else{
+                var options={enableHighAccuracy:true,timeout:5000,maximumAge:0};
+                navigator.geolocation.getCurrentPosition(onSucces2,onError2,options);
+                function onSucces2(position){
+                    const {
+                        latitude,
+                        longitude
+                    }=position.coords;
+                    document.getElementById('cor2-lat').value=(parseFloat(`${latitude}`)).toFixed(10);//`Your location: (${latitude},${longitude})`
+                    document.getElementById('cor2-lon').value=(parseFloat(`${longitude}`)).toFixed(10);//`Your location: (${latitude},${longitude})`
+                }
+                function onError2(){
+                    document.getElementById('cor2').value='No se obtuvieron las coordenadas';
+                }
+            }
+        }
+        function Prueba(){
+            var difLat=(parseFloat(document.getElementById('cor2-lat').value))-(parseFloat(document.getElementById('cor1-lat').value));
+            var difLon=(parseFloat(document.getElementById('cor2-lon').value))-(parseFloat(document.getElementById('cor1-lon').value));
+            document.getElementById('dif').value=difLat;
+            document.getElementById('diflong').value=difLon;
+            //alert("Has recorrido: "+ (10**5 * (difLat**2 + difLon**2)**0.5 + 3)+"m");
+            //alert((parseFloat(document.getElementById('cor1-lat').value).toFixed(20)));
+        }
+    </script>
+</body>
+</html>

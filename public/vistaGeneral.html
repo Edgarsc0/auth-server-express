@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+    <style>
+		rect[name=town]:hover{
+  fill: aqua;
+}
+path[name=town]:hover{
+    fill: aqua;
+}
+
+.main{
+    display: grid;
+    justify-content: center;
+    /* border: 1px solid black; */
+    height: 700px;
+    width: 100%;
+}
+#title{
+    height:80px;
+  width: 100%;
+}
+
+#button{
+    visibility: hidden;
+  height: 100px;
+}
+.IniciarRutabutton{
+    font-size: 20px;
+    width: 100%;
+    margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	/* font-size: 1em; */
+	font-weight: bold;
+	/* margin-top: 20px; */
+	outline: none;
+	border: #fff solid 1px;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+.inputDiv{
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+input{
+    width: 85%;
+    font-size: 20px;
+}
+.searchButton{
+    width: 15%;
+    height: 40px;
+}
+.resaltado{
+    fill: aqua;
+}
+svg{
+    /* border: 1px solid black; */
+    height: 600px;
+    width: 1000px;
+}
+.content{
+    /* border: 1px solid black; */
+    text-align: center;
+    width: 100%;
+}
+.mainContent{
+  display: grid;
+  /* border: 1px solid black; */
+  justify-content: center;
+}
+.bg {
+    animation:slide 3s ease-in-out infinite alternate;
+	background-image: linear-gradient(-60deg, #18365b 50%, #1c1f2c 50%);
+	bottom:0;
+	left:-50%;
+	opacity:.9;
+	position:fixed;
+	right:-50%;
+	top:0;
+	z-index:-1;
+}
+.bg2 {
+    animation-direction:alternate-reverse;
+	animation-duration:4s;
+}
+.bg3 {
+	animation-duration:5s;
+}
+@keyframes desopacar{
+	from{
+        opacity: 0;
+	}to{
+        opacity: 1;
+	}
+}
+@keyframes opacar{
+    from{
+        opacity: 1;
+	}to{
+        opacity: 0;
+	}
+}
+@keyframes slide {
+    0% {
+        transform:translateX(-25%);
+	}
+	100% {
+        transform:translateX(25%);
+	}
+}
+.button{
+    width: 20%;
+	/* height: 40px; */
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	font-size: 1em;
+	font-weight: bold;
+	/* margin-top: 20px; */
+	outline: none;
+	border: #fff solid 1px;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+.buscador {
+    color: black;
+    margin: 10px auto;
+    width: 70%;
+    height: 40px;
+    border-radius: 5px;
+    border: #573b8a solid;
+}
+*{
+    color: #fff;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+    <div class="animcaion">
+        <div class="bg"></div>
+        <div class="bg bg2"></div>
+        <div class="bg bg3"></div>
+    </div>
+	<h1>Consultar Espacios Fisicos</h1>
+    <h1><a href="http://localhost:3000/Mapas">Volver a mapas</a></h1>
+            <div class="inputDiv">
+                <input class="buscador" list="aulas" id="search" placeholder="Buscar...">
+                <button  class="searchButton button" onclick="redirigir()">Buscar</button>
+                <datalist id="aulas"></datalist>
+            </div>
+	<div id="around" class = 'main'>
+
+        <svg
+   viewBox="0 0 179.3406 178.01528"
+   version="1.1"
+   id="eqXo87N13f91"
+   xmlSpace="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlnsSvg="http://www.w3.org/2000/svg">
+        <g id="viewport">
+            <defs
+     id="defs2" /><path
+     display="inline" fill="#b3b3b3" fill-opacity="0.988235" stroke="#000000" stroke-width="0.529167" stroke-dasharray="none"
+     d="M 45.125893,0.26495509 179.07175,0.52106609 176.25454,176.21296 43.58923,177.74962 0.30653429,142.91858 Z"
+     id="path233" /><g
+     id="layer2"
+     display="inline"
+     transform="translate(-13.77955,-37.383306)"><text
+       xmlSpace="preserve"
+       font-size="15.0814px" display="inline" fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+       x="133.51901"
+       y="90.723076"
+       id="text1402"
+       transform="matrix(0.88421033,0,0,1.1309526,-1.2402335,23.705032)"><tspan
+         id="tspan1400"
+         fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+         x="133.51901"
+         y="90.723076">Plaza</tspan></text><text
+       xmlSpace="preserve"
+       font-size="5.88184px" display="inline" fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+       x="86.846443"
+       y="46.02626"
+       id="text1402-3"
+       transform="matrix(0.73490538,0,0,1.3607194,-1.2402335,23.705032)"><tspan
+         id="tspan1400-9"
+         fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+         x="86.846443"
+         y="46.02626">Area gourmet</tspan></text><text
+       xmlSpace="preserve"
+       font-size="12.2075px" display="inline" fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+       x="41.73193"
+       y="147.32561"
+       id="text1402-1"
+       transform="matrix(0.96564916,0,0,1.0355728,-1.2402335,23.705032)"><tspan
+         id="tspan1400-5"
+         fill="#000000" fill-opacity="0.988235" stroke="none" stroke-width="0.132292" stroke-dasharray="none"
+         x="41.73193"
+         y="147.32561">Parque</tspan></text></g><g
+     id="layer1"
+     transform="translate(-15.019784,-13.678274)"
+     display="inline"><path
+       display="inline" opacity="0.7" fill="#008000" fill-opacity="0.988235" stroke="#000000" stroke-width="0.529167" stroke-dasharray="none"
+       d="m 86.781183,106.14306 -0.918361,84.61615 -27.003029,0.41524 -21.626917,-17.29924 -6.539922,-28.80334 9.988314,-30.73327 9.476095,-7.42721 z"
+       id="parque"
+       name="town" /><path
+       display="inline" opacity="0.7" fill="#800080" fill-opacity="0.988235" stroke="#000000" stroke-width="0.529167" stroke-dasharray="none"
+       d="m 92.927837,178.36625 75.808743,0.76833 V 83.605321 h 14.3422 L 182.82267,62.092026 193.57931,61.835917 193.3232,14.711563 61.938451,14.455451 61.68234,36.737074 l 8.707763,10e-7 -0.256112,-3.841658 33.294379,0.384165 -0.38416,51.478236 -2.17694,-0.128057 -7.939433,16.647189 z"
+       id="plaza"
+       name="town" /><path
+       display="inline" opacity="0.7" fill="#008080" fill-opacity="0.988235" stroke="#000000" stroke-width="0.529167" stroke-dasharray="none"
+       d="m 61.298176,36.609019 h 9.348036 l -0.384165,-3.713602 32.654103,0.640276 v 21.001072 l -3.585547,0.256108 -0.256111,33.038272 -39.953258,-0.128057 -1.280553,-44.051027 3.617562,0.06403 z"
+       id="areaGourmet"
+       name="town" /></g>
+    
+        </g>
+    </svg>     
+        <button class="button" onclick = "zoom(event)">+</button>
+        <button class="button" onclick = "zoomInverso(event)">-</button>
+    </div>
+	<div class="mainContent">
+        <div class="content">
+            <div id="title"></div>
+            <div id="button"><button class="IniciarRutabutton" onclick="window.location.href='index.html'">Iniciar Ruta</button></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		// DRAG Y ZOOM EN LOS MAPAS
+var svgCanvas = document.getElementById("eqXo87N13f91");
+var viewPort = document.getElementById("viewport");
+
+console.log(svgCanvas)
+console.log(viewPort)
+
+var drag = false;
+var offset = { x: 0, y: 0 };
+var factor = .1;
+var matrix = new DOMMatrix();
+
+// MIENTRASS ESTE EL MOUSE CLICKEANDO
+svgCanvas.addEventListener('pointerdown', function (event) {
+
+    drag = true;
+    offset = { x: event.offsetX, y: event.offsetY };
+
+});
+
+// MIENTRAS SE MUEVA EL MOUSE
+svgCanvas.addEventListener('pointermove', function (event) {
+    if (drag) {
+        var tx = event.offsetX - offset.x;
+        var ty = event.offsetY - offset.y;
+            offset = {
+                x: event.offsetX,
+                y: event.offsetY
+            };
+            
+            matrix.preMultiplySelf(new DOMMatrix()
+            .translateSelf(tx, ty));
+            // SOLO SI ESTA DENTRO DE LOS LIMITES
+            if((matrix.e > -1100 && matrix.e < 1100) && (matrix.f > -700 && matrix.f < 700)){
+
+                viewPort.style.transform = matrix.toString();
+
+            }
+            else{
+
+                if(matrix.e < 0){
+
+                    matrix.e += 1;
+
+                }
+                else if(matrix.e > 0){
+
+                    matrix.e -= 1;
+
+                }
+                else if(matrix.f < 0){
+
+                    matrix.f += 1;
+
+                }
+                else if(matrix.f > 0){
+
+                    matrix.f -= 1;
+
+                }
+
+            }
+
+    }
+});
+
+// CUANDO EL MOUSE ABANDONE EL SVG
+svgCanvas.addEventListener('pointerup', function (event) {
+    drag = false;
+});
+
+// FUNCION DE ZOOM
+function zoom (event) {
+    var zoom = event.deltaY > 0 ? -1 : 1;
+    var scale = 1 + factor * zoom;
+    offset = {
+        x: event.offsetX,
+        y: event.offsetY
+    };
+    matrix.preMultiplySelf(new DOMMatrix()
+        .translateSelf(offset.x, offset.y)
+        .scaleSelf(scale, scale)
+        .translateSelf(-offset.x, -offset.y));
+        if(matrix.d > 1.7){
+        
+            matrix.d = 1.6;
+    
+        }
+        else{
+    
+            viewPort.style.transform = matrix.toString();
+    
+        }
+}
+
+// FUNCION REZOOM
+function zoomInverso (event) {
+    var zoom = event.deltaY > 0 ? -1 : 1;
+    var scale = 1 - factor / zoom;
+    offset = {
+        x: event.offsetX,
+        y: event.offsetY
+    };
+    matrix.preMultiplySelf(new DOMMatrix()
+        .translateSelf(offset.x, offset.y)
+        .scaleSelf(scale, scale)
+        .translateSelf(-offset.x, -offset.y));
+    if(matrix.d < .6){
+        
+        matrix.d = .5;
+
+    }
+    else{
+
+        viewPort.style.transform = matrix.toString();
+
+    }
+}
+
+// EXISTE EN EL MAPA?
+const validarBusqueda=(busqueda)=>{
+    const options=document.getElementById("aulas").options;
+    for(i of options){
+        if(i.value==busqueda){
+            return true;
+        }
+    }
+    return false;
+}
+
+// MOSTRAR EN AZUL
+const redirigir=()=>{
+    const busqueda=document.getElementById("search").value;
+    if(!validarBusqueda(busqueda)){
+        Swal.fire({
+            title:'Error',
+            text: 'Has introducido una busqueda invalida. Revisa la entrada'
+        });
+    }else{
+        window.location.assign(`vistaGeneral.html?location=${busqueda}`);
+    }
+}
+
+// ESCRIBIR NOMBRE DEL LUGAR
+const mostrar=(id)=>{
+    if(id=="plaza"){
+        window.location.href="/townPb.html";
+    }if(id=="areaGourmet"){
+        window.location.href="/townPb.html";
+    }else{
+        document.querySelector("#title").innerHTML=`<h2>${id}</h2>`;
+        document.getElementById("button").style.visibility="visible"
+    }
+}
+
+const removerResaltado=()=>{
+    try{
+        document.getElementsByClassName("resaltado")[0].removeAttribute("class");
+    }catch(error){}
+}
+window.onload=()=>{
+    let opt="";
+    const datalist=document.getElementById("aulas");
+    document.getElementsByName("town").forEach((element)=>{
+        element.setAttribute("onclick","mostrar(id)");
+        opt+=`<option value="${element.id}">`;
+    });
+    datalist.innerHTML=opt;
+    const valores = window.location.search;
+    if(!valores==""){
+        const enlace=document.createElement("A");
+        enlace.setAttribute("href","vistaGeneral.html");
+        enlace.innerHTML="Regresar a Principal";
+        document.body.appendChild(enlace)
+        const urlParams = new URLSearchParams(valores);
+        const location = urlParams.get('location');
+        const element=document.getElementById(location);
+        element.setAttribute("class","resaltado");
+        element.onclick();
+        document.getElementsByName("town").forEach((element)=>{
+            element.setAttribute("onclick","removerResaltado(),mostrar(id)");
+        });
+    }
+}
+	</script>
+</body>
+</html>
