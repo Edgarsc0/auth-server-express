@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
         io.emit("newCor",{cor:cor,to:to});
     })
     socket.on("stopWp",({to})=>{
+        console.log("evento stopwp recibido");
         io.emit("stopWp",{to:to});
     })
 });
