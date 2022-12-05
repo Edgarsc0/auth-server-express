@@ -21,13 +21,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 const server = http.createServer(app);
 const io = new SocketServer(server, {
     cors: {
-        origin: "https://next-client-gabow.vercel.app/",
+        origin: "https://next-client-gabow.vercel.app",
     },
 });
 
-app.get("/",(req,res)=>{
-    res.send("<h1>HOla</h1>");
-})
 
 app.get("/Edificio/:place",(req,res)=>{
     const place=req.params.place;
