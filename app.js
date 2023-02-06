@@ -79,7 +79,8 @@ app.post("/api/auth/login",(req,res)=>{
     con.query(myQuerys.selectUser,[email],(error,result)=>{
         if(error){
             return res.json({
-                status:"Something went wrong"
+                status:"Something went wrong",
+                error:error
             });
         }else{
             if(result.length==0){
